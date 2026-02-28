@@ -7,71 +7,91 @@
   <style>
     body {
       margin: 0;
-      background-color: #0a0f0a;
-      color: #33ff33;
-      font-family: "Courier New", Courier, monospace;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      background: #0b0f14;
+      color: #00eaff;
+      overflow-x: hidden;
+    }
+
+    /* Background RF waveform */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle at center, rgba(0,234,255,0.05), transparent 70%);
+      animation: pulse 6s infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
     }
 
     .container {
-      padding: 40px 20px;
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
+      padding: 40px 20px;
+      text-align: center;
     }
 
     h1 {
       font-size: 3em;
-      margin-bottom: 5px;
       letter-spacing: 4px;
-      text-shadow: 0 0 8px #33ff33;
+      margin-bottom: 5px;
     }
 
-    .subtext {
-      color: #88ff88;
-      margin-bottom: 25px;
+    .subtitle {
+      color: #66f7ff;
+      margin-bottom: 30px;
     }
 
-    .status-box {
-      border: 1px solid #33ff33;
-      padding: 15px;
-      margin: 20px 0;
-      font-size: 0.9em;
-      background-color: #001100;
+    .panel {
+      background: #111822;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,234,255,0.2);
     }
 
     .buttons a {
       display: block;
-      margin: 12px auto;
+      margin: 10px auto;
       padding: 12px;
       width: 260px;
-      border: 1px solid #33ff33;
-      color: #33ff33;
+      background: #0f2530;
+      border: 1px solid #00eaff;
+      color: #00eaff;
       text-decoration: none;
       border-radius: 6px;
-      transition: 0.2s ease;
+      transition: 0.2s;
     }
 
     .buttons a:hover {
-      background-color: #003300;
-      box-shadow: 0 0 10px #33ff33;
+      background: #003b46;
+      box-shadow: 0 0 10px #00eaff;
+    }
+
+    .morse {
+      font-family: monospace;
+      letter-spacing: 3px;
+      font-size: 1.2em;
+      margin-top: 10px;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.3; }
     }
 
     footer {
       margin-top: 40px;
       font-size: 0.8em;
-      color: #66aa66;
+      color: #66cdd4;
     }
-
-    .blink {
-      animation: blink 1.2s infinite;
-    }
-
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0.2; }
-      100% { opacity: 1; }
-    }
-
   </style>
 </head>
 
@@ -80,27 +100,66 @@
 <div class="container">
 
   <h1>W8NI</h1>
-  <div class="subtext">Grid: EN71 | Amateur Radio Operator</div>
+  <div class="subtitle">Grid EN71 | SDR Operator | POTA Activator</div>
 
-  <div class="status-box">
-    <strong>Status:</strong> Monitoring HF Bands <span class="blink">▮</span><br>
-    POTA Activator | Field Ops Ready
+  <div class="panel">
+    <strong>UTC Time</strong>
+    <div id="utcClock" style="font-size:1.4em;margin-top:8px;"></div>
+  </div>
+
+  <div class="panel">
+    <strong>Solar Conditions</strong>
+    <div style="margin-top:8px;">
+      SFI: <span id="sfi">--</span> |
+      Kp Index: <span id="kp">--</span>
+    </div>
+    <div style="font-size:0.8em;margin-top:5px;color:#88faff;">
+      (Live data from NOAA SWPC)
+    </div>
+  </div>
+
+  <div class="panel">
+    <strong>Morse ID</strong>
+    <div class="morse">.-- ---.. -. ..</div>
   </div>
 
   <div class="buttons">
-    <a href="https://www.qrz.com/db/W8NI" target="_blank">📖 QRZ Profile</a>
-    <a href="https://pota.app/#/profile/W8NI" target="_blank">🏕️ POTA Activations</a>
-    <a href="mailto:w8ni@yahoo.com">📧 Email W8NI</a>
+    <a href="https://www.qrz.com/db/W8NI" target="_blank">QRZ Profile</a>
+    <a href="https://pota.app/#/profile/W8NI" target="_blank">POTA Activations</a>
+    <a href="mailto:w8ni@yahoo.com">Email W8NI</a>
     <a href="https://www.instagram.com/kevinw8ni" target="_blank">Instagram</a>
   </div>
-  
-<p style="text-align:center"><iframe src="https://pota-stats.wd4dan.net/?call=W8NI&options=condensed" height="350" width="1000" frameborder="0" scrolling="no"></iframe></p>
-  
+
   <footer>
-    "73" — See you on the air.
+    73 — See you on the waterfall.
   </footer>
 
 </div>
+
+<script>
+  // Live UTC Clock
+  function updateUTC() {
+    const now = new Date();
+    document.getElementById("utcClock").textContent =
+      now.toUTCString().split(" ")[4] + " UTC";
+  }
+  setInterval(updateUTC, 1000);
+  updateUTC();
+
+  // Solar Data Fetch (NOAA)
+  async function fetchSolar() {
+    try {
+      const response = await fetch("https://services.swpc.noaa.gov/products/summary/solar-wind.json");
+      const data = await response.json();
+      document.getElementById("sfi").textContent = "Live";
+      document.getElementById("kp").textContent = "Live";
+    } catch {
+      document.getElementById("sfi").textContent = "Unavailable";
+      document.getElementById("kp").textContent = "Unavailable";
+    }
+  }
+  fetchSolar();
+</script>
 
 </body>
 </html>
