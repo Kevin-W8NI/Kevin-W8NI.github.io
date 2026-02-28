@@ -3,49 +3,101 @@
 <head>
   <title>W8NI | Amateur Radio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
-      background-color: #111;
-      color: #f2f2f2;
-      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #0a0f0a;
+      color: #33ff33;
+      font-family: "Courier New", Courier, monospace;
       text-align: center;
-      padding: 40px;
     }
+
+    .container {
+      padding: 40px 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
     h1 {
       font-size: 3em;
       margin-bottom: 5px;
-      letter-spacing: 2px;
+      letter-spacing: 4px;
+      text-shadow: 0 0 8px #33ff33;
     }
-    .section {
-      margin-top: 30px;
+
+    .subtext {
+      color: #88ff88;
+      margin-bottom: 25px;
     }
-    a {
+
+    .status-box {
+      border: 1px solid #33ff33;
+      padding: 15px;
+      margin: 20px 0;
+      font-size: 0.9em;
+      background-color: #001100;
+    }
+
+    .buttons a {
       display: block;
-      margin: 10px auto;
+      margin: 12px auto;
       padding: 12px;
       width: 260px;
-      background-color: #222;
-      color: white;
+      border: 1px solid #33ff33;
+      color: #33ff33;
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 6px;
       transition: 0.2s ease;
     }
-    a:hover {
-      background-color: #444;
+
+    .buttons a:hover {
+      background-color: #003300;
+      box-shadow: 0 0 10px #33ff33;
     }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.8em;
+      color: #66aa66;
+    }
+
+    .blink {
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+
   </style>
 </head>
+
 <body>
 
-  <h1>W8NI</h1>
-  <p>Grid: EN71</p>
-  <p>Amateur Radio Operator</p>
+<div class="container">
 
-  <div class="section">
-    <a href="https://www.qrz.com/db/W8NI" target="_blank">📖 View QRZ Profile</a>
-    <a href="https://pota.app/#/profile/W8NI" target="_blank">🏕️ View POTA Activations</a>
-    <a href="mailto:w8ni@yahoo.com">📧 Email Me</a>
+  <h1>W8NI</h1>
+  <div class="subtext">Grid: EN71 | Amateur Radio Operator</div>
+
+  <div class="status-box">
+    <strong>Status:</strong> Monitoring HF Bands <span class="blink">▮</span><br>
+    POTA Activator | Field Ops Ready
   </div>
+
+  <div class="buttons">
+    <a href="https://www.qrz.com/db/W8NI" target="_blank">📖 QRZ Profile</a>
+    <a href="https://pota.app/#/profile/W8NI" target="_blank">🏕️ POTA Activations</a>
+    <a href="mailto:w8ni@yahoo.com">📧 Email W8NI</a>
+  </div>
+
+  <footer>
+    "73" — See you on the air.
+  </footer>
+
+</div>
 
 </body>
 </html>
