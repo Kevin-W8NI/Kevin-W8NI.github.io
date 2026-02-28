@@ -160,6 +160,22 @@
     }
   }
   fetchSolar();
+
+   // Auto-download vCard
+  function downloadVCard() {
+    const link = document.createElement("a");
+    link.href = "W8NI.vcf";
+    link.download = "W8NI.vcf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // Trigger auto-download on page load
+  window.onload = function() {
+    downloadVCard();
+  };
+
 </script>
 
 </body>
