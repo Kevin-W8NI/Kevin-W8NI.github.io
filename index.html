@@ -288,6 +288,17 @@ setInterval(getSolar,300000); // refresh every 5 minutes
   </div>
 
   <div class="panel">
+    <strong>Solar Conditions</strong>
+    <div style="margin-top:8px;">
+<div id="solar">Loading solar data...</div>
+      SFI: <span id="sfi">--</span> |
+      Kp Index: <span id="kp">--</span>
+    </div>
+    <div style="font-size:0.8em;margin-top:5px;color:#88faff;">
+    </div>
+  </div>
+
+  <div class="panel">
     <strong>Morse ID</strong>
     <div class="morse">.-- ---.. -. ..</div>
   </div>
@@ -315,24 +326,36 @@ setInterval(getSolar,300000); // refresh every 5 minutes
   }
   setInterval(updateUTC, 1000);
   updateUTC();
-  
 
-const morseText = "... --- ...   .-- ---.. -. ..";
-let i=0;
+  // Solar Data Fetch
+  async function getSolar(){
+  try{
 
-function morseAnim(){
+let response = await fetch("https://www.hamqsl.com/solarxml.php");
 
-document.getElementById("morse").innerHTML =
-morseText.substring(0,i);
+let text = await response.text();
 
-i++;
+let parser = new DOMParser();
+let xml = parser.parseFromString(text,"text/xml");
 
-if(i>morseText.length){i=0;}
+let sfi = xml.getElementsByTagName("solarflux")[0].textContent;
+let kp = xml.getElementsByTagName("kindex")[0].textContent;
+
+document.getElementById("solar").innerHTML =
+"SFI: "+sfi+" | Kp: "+kp;
+
+}catch(e){
+
+document.getElementById("solar").innerHTML =
+"Solar data unavailable";
 
 }
 
-setInterval(morseAnim,120);
+}
 
+getSolar();
+setInterval(getSolar,300000); // refresh every 5 minutes
+  
 
 </script>
 
