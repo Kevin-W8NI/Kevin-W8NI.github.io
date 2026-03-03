@@ -103,6 +103,17 @@
   <h1>W8NI</h1>
   <div class="subtitle">Grid EN71 | ITU Zone 8 | CQ Zone 4</div>
 
+  <div id="nfcMessage" style="
+margin-top:15px;
+background:#0f2530;
+padding:10px;
+border:1px solid #00eaff;
+border-radius:6px;
+display:none;
+font-size:0.9em;">
+👋 Thanks for tapping my card! Log our contact below.
+</div>
+  
   <div class="panel">
     <strong>UTC Time</strong>
     <div id="utcClock" style="font-size:1.4em;margin-top:8px;"></div>
@@ -130,6 +141,12 @@
 </div>
 
   <script>
+ // NFC Message
+    const params = new URLSearchParams(window.location.search);
+
+if (params.get("nfc") === "true") {
+  document.getElementById("nfcMessage").style.display = "block";
+}
   // Live UTC Clock
   function updateUTC() {
     const now = new Date();
