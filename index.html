@@ -1,148 +1,156 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>W8NI | Amateur Radio</title>
+  <title>W8NI | Amateur Radio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
+  <style>
+    body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('LdgWallpaper.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #00eaff;
+  overflow-x: hidden;
+    }
 
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#05070b;
-color:#00eaff;
-text-align:center;
-overflow-x:hidden;
-}
+    /* Background RF waveform */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle at center, rgba(0,234,255,0.05), transparent 70%);
+      animation: pulse 6s infinite alternate;
+      z-index: -1;
+    }
 
-.container{
-margin-top:40px;
-}
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
 
-.profile{
-width:140px;
-border-radius:50%;
-border:3px solid #00eaff;
-box-shadow:0 0 20px #00eaff;
-margin-bottom:10px;
-}
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
 
-.callsign{
-font-size:48px;
-font-weight:bold;
-letter-spacing:4px;
-text-shadow:0 0 15px #00eaff;
-}
+    h1 {
+      font-size: 3em;
+      letter-spacing: 4px;
+      margin-bottom: 5px;
+    }
 
-.grid{
-font-size:18px;
-margin-bottom:20px;
-}
+    .subtitle {
+      color: #66f7ff;
+      margin-bottom: 30px;
+    }
 
-.panel{
-display:inline-block;
-border:1px solid #00eaff55;
-padding:15px;
-margin:10px;
-border-radius:10px;
-background:#0a0f18;
-box-shadow:0 0 10px #00eaff33;
-}
+    .panel {
+      background: #111822;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,234,255,0.2);
+    }
 
-.buttons a{
-display:inline-block;
-margin:8px;
-padding:10px 18px;
-border-radius:6px;
-border:1px solid #00eaff;
-text-decoration:none;
-color:#00eaff;
-transition:0.3s;
-}
+    .buttons a {
+      display: block;
+      margin: 10px auto;
+      padding: 12px;
+      width: 260px;
+      background: #0f2530;
+      border: 1px solid #00eaff;
+      color: #00eaff;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.2s;
+    }
 
-.buttons a:hover{
-background:#00eaff;
-color:#000;
-box-shadow:0 0 10px #00eaff;
-}
+    .buttons a:hover {
+      background: #003b46;
+      box-shadow: 0 0 10px #00eaff;
+    }
 
-.morse{
-margin-top:25px;
-font-family:monospace;
-font-size:20px;
-letter-spacing:3px;
-}
+    .morse {
+      font-family: monospace;
+      letter-spacing: 3px;
+      font-size: 1.2em;
+      margin-top: 10px;
+      animation: blink 1.2s infinite;
+    }
 
-.wave{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-height:120px;
-background:linear-gradient(transparent,#00eaff22);
-animation:wave 6s infinite linear;
-opacity:0.4;
-}
+    @keyframes blink {
+      50% { opacity: 0.3; }
+    }
 
-@keyframes wave{
-0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
-}
-
-</style>
+    footer {
+      margin-top: 40px;
+      font-size: 0.8em;
+      color: #66cdd4;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="container">
 
-<img src="kevin.jpg" class="profile">
+  <h1>W8NI</h1>
+  <div class="subtitle">Grid EN71 | ITU Zone 8 | CQ Zone 4</div>
 
-<div class="callsign">W8NI</div>
-<div class="grid">Grid EN71</div>
+  <div class="panel">
+    <strong>UTC Time</strong>
+    <div id="utcClock" style="font-size:1.4em;margin-top:8px;"></div>
+  </div>
 
-<div class="panel">
-UTC Time<br>
-<span id="utcClock">loading...</span>
+  <div class="panel">
+    <strong>Solar Conditions</strong>
+    <div style="margin-top:8px;">
+<div id="solar">Loading solar data...</div>
+      SFI: <span id="sfi">--</span> |
+      Kp Index: <span id="kp">--</span>
+    </div>
+    <div style="font-size:0.8em;margin-top:5px;color:#88faff;">
+    </div>
+  </div>
+
+  <div class="panel">
+    <strong>Morse ID</strong>
+    <div class="morse">.-- ---.. -. ..</div>
+  </div>
+
+  <div class="buttons">
+    <a href="https://www.qrz.com/db/W8NI" target="_blank">QRZ Profile</a>
+    <a href="https://pota.app/#/profile/W8NI" target="_blank">POTA Activations</a>
+    <a href="https://www.instagram.com/kevinw8ni" target="_blank">Instagram</a>
+    <a href="mailto:w8ni@yahoo.com">Email W8NI</a>
+    <a href="W8NI.vcf" download>💾 Download Contact</a>
+  </div>
+
+  <footer>
+    73 — See you on the waterfall.
+  </footer>
+
 </div>
-
-<div class="panel">
-Solar Conditions<br>
-<span id="solar">loading...</span>
-</div>
-
-<div class="buttons">
-
-<a href="https://www.qrz.com/db/W8NI" target="_blank">QRZ</a>
-
-<a href="https://pota.app/#/profile/W8NI" target="_blank">POTA</a>
-
-<a href="mailto:w8ni@yahoo.com">Email</a>
-
-<a href="W8NI.vcf">Save Contact</a>
-
-</div>
-
-<div class="morse" id="morse"></div>
-
-</div>
-
-<div class="wave"></div>
 
 <script>
+  // Live UTC Clock
+  function updateUTC() {
+    const now = new Date();
+    document.getElementById("utcClock").textContent =
+      now.toUTCString().split(" ")[4] + " UTC";
+  }
+  setInterval(updateUTC, 1000);
+  updateUTC();
 
-function updateUTC(){
-let now = new Date();
-let utc = now.toUTCString().split(" ")[4];
-document.getElementById("utcClock").innerHTML = utc;
-}
-
-setInterval(updateUTC,1000);
-updateUTC();
-
-
-async function getSolar(){
-
-try{
+  // Solar Data Fetch
+  async function getSolar(){
+  try{
 
 let response = await fetch("https://www.hamqsl.com/solarxml.php");
 
@@ -167,8 +175,147 @@ document.getElementById("solar").innerHTML =
 }
 
 getSolar();
-setInterval(getSolar,300000);
+setInterval(getSolar,300000); // refresh every 5 minutes
+  
+<!DOCTYPE html>
+<html>
+<head>
+  <title>W8NI | Amateur Radio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <style>
+    body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('LdgWallpaper.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #00eaff;
+  overflow-x: hidden;
+    }
+
+    /* Background RF waveform */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle at center, rgba(0,234,255,0.05), transparent 70%);
+      animation: pulse 6s infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      letter-spacing: 4px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #66f7ff;
+      margin-bottom: 30px;
+    }
+
+    .panel {
+      background: #111822;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,234,255,0.2);
+    }
+
+    .buttons a {
+      display: block;
+      margin: 10px auto;
+      padding: 12px;
+      width: 260px;
+      background: #0f2530;
+      border: 1px solid #00eaff;
+      color: #00eaff;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.2s;
+    }
+
+    .buttons a:hover {
+      background: #003b46;
+      box-shadow: 0 0 10px #00eaff;
+    }
+
+    .morse {
+      font-family: monospace;
+      letter-spacing: 3px;
+      font-size: 1.2em;
+      margin-top: 10px;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.3; }
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.8em;
+      color: #66cdd4;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>W8NI</h1>
+  <div class="subtitle">Grid EN71 | ITU Zone 8 | CQ Zone 4</div>
+
+  <div class="panel">
+    <strong>UTC Time</strong>
+    <div id="utcClock" style="font-size:1.4em;margin-top:8px;"></div>
+  </div>
+
+  <div class="panel">
+    <strong>Morse ID</strong>
+    <div class="morse">.-- ---.. -. ..</div>
+  </div>
+
+  <div class="buttons">
+    <a href="https://www.qrz.com/db/W8NI" target="_blank">QRZ Profile</a>
+    <a href="https://pota.app/#/profile/W8NI" target="_blank">POTA Activations</a>
+    <a href="https://www.instagram.com/kevinw8ni" target="_blank">Instagram</a>
+    <a href="mailto:w8ni@yahoo.com">Email W8NI</a>
+    <a href="W8NI.vcf" download>💾 Download Contact</a>
+  </div>
+
+  <footer>
+    73 — See you on the waterfall.
+  </footer>
+
+</div>
+
+<script>
+  // Live UTC Clock
+  function updateUTC() {
+    const now = new Date();
+    document.getElementById("utcClock").textContent =
+      now.toUTCString().split(" ")[4] + " UTC";
+  }
+  setInterval(updateUTC, 1000);
+  updateUTC();
+  
 
 const morseText = "... --- ...   .-- ---.. -. ..";
 let i=0;
@@ -186,15 +333,6 @@ if(i>morseText.length){i=0;}
 
 setInterval(morseAnim,120);
 
-
-setTimeout(function(){
-let link=document.createElement("a");
-link.href="W8NI.vcf";
-link.download="W8NI.vcf";
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
-},1500);
 
 </script>
 
