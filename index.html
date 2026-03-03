@@ -150,213 +150,31 @@
 
   // Solar Data Fetch
   async function getSolar(){
-  try{
+    try{
 
-let response = await fetch("https://www.hamqsl.com/solarxml.php");
+      let response = await fetch("https://www.hamqsl.com/solarxml.php");
 
-let text = await response.text();
+      let text = await response.text();
 
-let parser = new DOMParser();
-let xml = parser.parseFromString(text,"text/xml");
+      let parser = new DOMParser();
+      let xml = parser.parseFromString(text,"text/xml");
 
-let sfi = xml.getElementsByTagName("solarflux")[0].textContent;
-let kp = xml.getElementsByTagName("kindex")[0].textContent;
+      let sfi = xml.getElementsByTagName("solarflux")[0].textContent;
+      let kp = xml.getElementsByTagName("kindex")[0].textContent;
 
-document.getElementById("solar").innerHTML =
-"SFI: "+sfi+" | Kp: "+kp;
+      document.getElementById("solar").innerHTML =
+      "SFI: "+sfi+" | Kp: "+kp;
 
-}catch(e){
+    }catch(e){
 
-document.getElementById("solar").innerHTML =
-"Solar data unavailable";
+      document.getElementById("solar").innerHTML =
+      "Solar data unavailable";
 
-}
-
-}
-
-getSolar();
-setInterval(getSolar,300000); // refresh every 5 minutes
-  
-<!DOCTYPE html>
-<html>
-<head>
-  <title>W8NI | Amateur Radio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: url('LdgWallpaper.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #00eaff;
-  overflow-x: hidden;
     }
-
-    /* Background RF waveform */
-    body::before {
-      content: "";
-      position: fixed;
-      width: 200%;
-      height: 200%;
-      top: -50%;
-      left: -50%;
-      background: radial-gradient(circle at center, rgba(0,234,255,0.05), transparent 70%);
-      animation: pulse 6s infinite alternate;
-      z-index: -1;
-    }
-
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); }
-    }
-
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 3em;
-      letter-spacing: 4px;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      color: #66f7ff;
-      margin-bottom: 30px;
-    }
-
-    .panel {
-      background: #111822;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,234,255,0.2);
-    }
-
-    .buttons a {
-      display: block;
-      margin: 10px auto;
-      padding: 12px;
-      width: 260px;
-      background: #0f2530;
-      border: 1px solid #00eaff;
-      color: #00eaff;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: 0.2s;
-    }
-
-    .buttons a:hover {
-      background: #003b46;
-      box-shadow: 0 0 10px #00eaff;
-    }
-
-    .morse {
-      font-family: monospace;
-      letter-spacing: 3px;
-      font-size: 1.2em;
-      margin-top: 10px;
-      animation: blink 1.2s infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0.3; }
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.8em;
-      color: #66cdd4;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <h1>W8NI</h1>
-  <div class="subtitle">Grid EN71 | ITU Zone 8 | CQ Zone 4</div>
-
-  <div class="panel">
-    <strong>UTC Time</strong>
-    <div id="utcClock" style="font-size:1.4em;margin-top:8px;"></div>
-  </div>
-
-  <div class="panel">
-    <strong>Solar Conditions</strong>
-    <div style="margin-top:8px;">
-<div id="solar">Loading solar data...</div>
-      SFI: <span id="sfi">--</span> |
-      Kp Index: <span id="kp">--</span>
-    </div>
-    <div style="font-size:0.8em;margin-top:5px;color:#88faff;">
-    </div>
-  </div>
-
-  <div class="panel">
-    <strong>Morse ID</strong>
-    <div class="morse">.-- ---.. -. ..</div>
-  </div>
-
-  <div class="buttons">
-    <a href="https://www.qrz.com/db/W8NI" target="_blank">QRZ Profile</a>
-    <a href="https://pota.app/#/profile/W8NI" target="_blank">POTA Activations</a>
-    <a href="https://www.instagram.com/kevinw8ni" target="_blank">Instagram</a>
-    <a href="mailto:w8ni@yahoo.com">Email W8NI</a>
-    <a href="W8NI.vcf" download>💾 Download Contact</a>
-  </div>
-
-  <footer>
-    73 — See you on the waterfall.
-  </footer>
-
-</div>
-
-<script>
-  // Live UTC Clock
-  function updateUTC() {
-    const now = new Date();
-    document.getElementById("utcClock").textContent =
-      now.toUTCString().split(" ")[4] + " UTC";
   }
-  setInterval(updateUTC, 1000);
-  updateUTC();
 
-  // Solar Data Fetch
-  async function getSolar(){
-  try{
-
-let response = await fetch("https://www.hamqsl.com/solarxml.php");
-
-let text = await response.text();
-
-let parser = new DOMParser();
-let xml = parser.parseFromString(text,"text/xml");
-
-let sfi = xml.getElementsByTagName("solarflux")[0].textContent;
-let kp = xml.getElementsByTagName("kindex")[0].textContent;
-
-document.getElementById("solar").innerHTML =
-"SFI: "+sfi+" | Kp: "+kp;
-
-}catch(e){
-
-document.getElementById("solar").innerHTML =
-"Solar data unavailable";
-
-}
-
-}
-
-getSolar();
-setInterval(getSolar,300000); // refresh every 5 minutes
-  
-
+  getSolar();
+  setInterval(getSolar,300000); // refresh every 5 minutes
 </script>
 
 </body>
